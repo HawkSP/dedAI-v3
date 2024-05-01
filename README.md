@@ -151,6 +151,8 @@ This project operates under the DedAI v3 Restricted License Agreement. See [LICE
 
 Special thanks to the computational neuroscience community and Emotiv for their invaluable insights and collaboration. We also acknowledge the foundational algorithms and seminal papers that contribute to this project.
 
+Also would like to credit gcui-art for the work on the Suno API [https://github.com/gcui-art/suno-api](./https://github.com/gcui-art/suno-api)
+
 ## Citations
 
 For scholarly use, please cite this repository using the following Bibtex entry:
