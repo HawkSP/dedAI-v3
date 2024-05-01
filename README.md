@@ -161,8 +161,8 @@ For scholarly use, please cite this repository using the following Bibtex entry:
 @misc{DedAI2023,
   author = {Elliott Mitchell},
   title = {DedAI v3: Emotion-Aware Music Curation Through EEG and AI},
-  year = {2023},
+  year = {2024},
   publisher = {GitHub},
   journal = {GitHub repository},
-  howpublished = {\\url{https://github.com/HawkSP/DedAI}}
+  howpublished = {\\url{https://github.com/HawkSP/dedAI-v3}}
 }
