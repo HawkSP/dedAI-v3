@@ -1,0 +1,20 @@
+{
+  "name": "dedai",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "electron .",
+    "stop": "kill-port 3000"
+  },
+  "main": "main.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@electron-forge/cli": "^7.4.0",
+    "electron": "^30.0.1"
+  },
+  "dependencies": {
+    "require": "^2.4.20"
+  }
+}

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DEDAI</title>
+  <style>
+    @font-face {
+      font-family: 'Horizon';
+      src: url('fonts/horizon.otf') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'Ubuntu';
+      src: url('fonts/Ubuntu-R.ttf') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    :root {
+      --crimson: #ff3131;
+      --black: #000;
+      --light-gray: #f0f0f0;
+      --font-main: 'Ubuntu', sans-serif;
+    }
+
+     body {
+      margin: 0;
+      padding: 20px;
+      font-family: var(--font-main);
+      background-color: var(--black);
+      color: var(--light-gray);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+
+    h1 {
+      color: var(--crimson);
+      font-size: 36px;
+      font-family: Horizon;
+      margin-bottom: 20px;
+
+    }
+
+    .controls {
+      width: 100%;
+      max-width: 600px; /* Adjust the max width as needed */
+    }
+
+    .controls input[type="text"], .controls button {
+      box-sizing: border-box; /* Ensures padding is included in width calculation */
+      padding: 12px;  /* Uniform padding */
+      margin: 10px 0; /* Consistent margin with other elements */
+    }
+
+    .controls input[type="range"] {
+      width: calc(100% - 20px); /* Ensures sliders match the adjusted width of text input and button */
+    }
+
+
+    input[type="text"], input[type="range"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      height: 10px;
+      border-radius: 5px;
+      background: var(--crimson);
+      outline: none;
+      opacity: 0.7;
+      transition: opacity .2s;
+    }
+
+    input[type="range"]:hover {
+      opacity: 1;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--light-gray);
+      cursor: pointer;
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--light-gray);
+      cursor: pointer;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 5px;
+      background-color: var(--crimson);
+      color: var(--light-gray);
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-size: 16px;
+      font-family: var(--font-main);
+    }
+
+    button:hover {
+      background-color: #b11236; /* Darker shade of crimson */
+    }
+
+    #loading {
+      display: none;
+      color: var(--crimson);
+      text-align: center;
+      font-weight: bold;
+      font-family: var(--font-main);
+    }
+
+     #trackList {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr); /* Creates two columns of equal width */
+      gap: 10px; /* Space between rows and columns */
+      list-style: none;
+      padding: 0;
+      margin: 20px 0; /* Adds space around the list */
+    }
+
+
+
+    #trackList li {
+      background-color: var(--crimson);
+      color: var(--light-gray);
+      padding: 10px;
+      margin-bottom: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    #trackList li:hover {
+      transform: scale(1.02);
+    }
+
+    audio {
+      width: 100%;
+      max-width: 600px; /* Adjust the max width as needed */
+      margin-top: 20px;
+      font-family: var(--font-main);
+    }
+
+    label {
+      color: var(--light-gray);
+      display: block; /* Makes labels block to align sliders properly */
+    }
+
+    #albumCover {
+      width: 256px; /* Set width of the album cover */
+      height: 256px; /* Set height of the album cover */
+      object-fit: cover; /* Ensure the image covers the space without distorting aspect ratio */
+      margin-top: 20px; /* Maintain margin as per your design */
+    }
+    #tracklist_text {
+      color: var(--light-gray);
+      font-weight: bold;
+      font-size: 20px;
+      margin-top: 20px;
+      font-family: var(--font-main);
+    }
+
+  </style>
+</head>
+<body>
+  <h1>dedAI</h1>
+  <div class="controls">
+    <label for="attention">Attention</label>
+    <input type="range" id="attention" min="1" max="100" value="50">
+    <label for="engagement">Engagement</label>
+    <input type="range" id="engagement" min="1" max="100" value="50">
+    <label for="excitement">Excitement</label>
+    <input type="range" id="excitement" min="1" max="100" value="50">
+    <label for="relaxation">Relaxation</label>
+    <input type="range" id="relaxation" min="1" max="100" value="50">
+    <label for="interest">Interest</label>
+    <input type="range" id="interest" min="1" max="100" value="50">
+    <label for="stress">Stress</label>
+    <input type="range" id="stress" min="1" max="100" value="50">
+    <input id="genre" type="text" placeholder="Enter Genre" />
+    <button id="run">Generate</button>
+  </div>
+  <div id="loading">Loading...</div>
+  <div id="tracklist_text">-Track List-</div>
+  <ul id="trackList"></ul>
+  <audio id="audioPlayer" controls></audio>
+  <img id="albumCover" src="default_album_cover.png" alt="Album Cover" style="max-width: 100%; height: auto; margin-top: 20px;">
+  <script src="renderer.js"></script>
+</body>
+</html>
