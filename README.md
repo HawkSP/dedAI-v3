@@ -19,13 +19,11 @@
 9. [Performance Metrics](#performance-metrics)
 10. [Case Studies](#case-studies)
 11. [Development Roadmap](#development-roadmap)
-12. [Interactive Tutorials](#interactive-tutorials)
-13. [Contributing](#contributing)
-14. [FAQ](#faq)
-15. [License](#license)
-16. [Acknowledgements](#acknowledgements)
-17. [Citations](#citations)
-18. [Contact & Social Media](#contact--social-media)
+12. [Contributing](#contributing)
+13. [FAQ](#faq)
+14. [License](#license)
+15. [Acknowledgements](#acknowledgements)
+16. [Citations](#citations)
 
 ---
 
@@ -79,10 +77,26 @@ Developed in partnership with Emotiv, a global leader in neuroengineering, to in
 ---
 
 ## Installation
-
+- Install Python requirements.txt
 ```bash
 pip install -r requirements.txt
 ```
+- Install Suno API
+```bash
+npm install
+cd .\suno-api\
+```
+- Run Suno API Server
+```bash
+cd .\suno-api\
+npm run dev
+```
+- Run dedAI
+```bash
+cd ..
+npm start
+```
+
 ## Usage
 
 Please refer to our [User Guide](./User_Guide.md) and [API Documentation](./API_Docs.md).
