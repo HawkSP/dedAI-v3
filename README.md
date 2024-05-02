@@ -77,6 +77,8 @@ Developed in partnership with Emotiv, a global leader in neuroengineering, to in
 ---
 
 ## Installation
+- For detailed installation of the Suno API please visit [gcui-suno-api](https://github.com/HawkSP/dedAI-v3/blob/main/suno-api/README.md).
+
 - Install Python requirements.txt
 ```bash
 pip install -r requirements.txt
