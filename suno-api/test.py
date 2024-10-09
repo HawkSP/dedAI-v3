@@ -791,7 +791,8 @@ def main():
         "tags": output,
         "title": title,
         "make_instrumental": False,
-        "wait_audio": False
+        "wait_audio": False,
+        "mv": "chirp-v3-5"
     })
     print(data)
     if data:

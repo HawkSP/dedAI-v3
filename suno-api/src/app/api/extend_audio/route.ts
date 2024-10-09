@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
-import { sunoApi } from "@/lib/SunoApi";
+import { DEFAULT_MODEL, sunoApi } from "@/lib/SunoApi";
 import { corsHeaders } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
@@ -8,11 +8,22 @@ export async function POST(req: NextRequest) {
   if (req.method === 'POST') {
     try {
       const body = await req.json();
-      const { prompt } = body;
+      const { audio_id, prompt, continue_at, tags, title, model } = body;
 
-      const lyrics = await (await sunoApi).generateLyrics(prompt);
+      if (!audio_id) {
+        return new NextResponse(JSON.stringify({ error: 'Audio ID is required' }), {
+          status: 400,
+          headers: {
+            'Content-Type': 'application/json',
+            ...corsHeaders
+          }
+        });
+      }
 
-      return new NextResponse(JSON.stringify(lyrics), {
+      const audioInfo = await (await sunoApi)
+        .extendAudio(audio_id, prompt, continue_at, tags, title, model || DEFAULT_MODEL);
+
+      return new NextResponse(JSON.stringify(audioInfo), {
         status: 200,
         headers: {
           'Content-Type': 'application/json',
@@ -20,7 +31,7 @@ export async function POST(req: NextRequest) {
         }
       });
     } catch (error: any) {
-      console.error('Error generating lyrics:', JSON.stringify(error.response.data));
+      console.error('Error extend audio:', JSON.stringify(error.response.data));
       if (error.response.status === 402) {
         return new NextResponse(JSON.stringify({ error: error.response.data.detail }), {
           status: 402,
@@ -48,6 +59,7 @@ export async function POST(req: NextRequest) {
     });
   }
 }
+
 
 export async function OPTIONS(request: Request) {
   return new Response(null, {

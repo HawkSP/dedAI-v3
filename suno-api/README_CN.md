@@ -8,14 +8,15 @@
 <p align="center">
   <a target="_blank" href="./README.md">English</a> 
   | <a target="_blank" href="./README_CN.md">简体中文</a> 
-  | <a target="_blank" href="https://suno.gcui.art">Demo</a> 
-  | <a target="_blank" href="https://suno.gcui.art/docs">文档</a> 
+  | <a target="_blank" href="https://suno.gcui.ai">Demo</a> 
+  | <a target="_blank" href="https://suno.gcui.ai/docs">文档</a> 
   | <a target="_blank" href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fgcui-art%2Fsuno-api&env=SUNO_COOKIE&project-name=suno-api&repository-name=suno-api">一键部署到 Vercel</a> 
   
 </p>
 <p align="center">
   <a href="https://www.producthunt.com/products/gcui-art-suno-api-open-source-sunoai-api/reviews?utm_source=badge-product_review&utm_medium=badge&utm_souce=badge-gcui&#0045;art&#0045;suno&#0045;api&#0045;open&#0045;source&#0045;sunoai&#0045;api" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/product_review.svg?product_id=577408&theme=light" alt="gcui&#0045;art&#0047;suno&#0045;api&#0058;Open&#0045;source&#0032;SunoAI&#0032;API - Use&#0032;API&#0032;to&#0032;call&#0032;the&#0032;music&#0032;generation&#0032;AI&#0032;of&#0032;suno&#0046;ai&#0046; | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
 </p>
+> 🔥 我们新的开源项目: [Album AI - 用自然语言与你的图库对话!](https://github.com/gcui-art/album-ai)
 
 ![suno-api banner](https://github.com/gcui-art/suno-api/blob/main/public/suno-banner.png)
 
@@ -27,13 +28,13 @@ Suno.ai v3 是一个令人惊叹的 AI 音乐服务，虽然官方还没有开�
 ## Demo
 
 我们部署了一个示例，绑定了一个免费的 suno 账号，所以它每天有使用限制，但你可以看到它运行起来的样子：
-[suno.gcui.art](https://suno.gcui.art)
+[suno.gcui.ai](https://suno.gcui.ai)
 
 ## Features
 
 - 完美的实现了 app.suno.ai 中的大部分 API
 - 自动保持账号活跃
-- 兼容OpenAI的 `/v1/chat/completions` API 格式
+- 兼容 OpenAI 的 `/v1/chat/completions` API 格式
 - 支持 Custom Mode
 - 一键部署到 vercel
 - 除了标准 API，还适配了 GPTs、coze 等 Agent 平台的 API Schema，所以你可以把它当做一个 LLM 的工具/插件/Action，集成到任意 AI Agent 中。
@@ -107,7 +108,7 @@ SUNO_COOKIE=<your-cookie>
 
 ### 5. 使用 Suno API
 
-你可以在 [suno.gcui.art](https://suno.gcui.art/docs)查看详细的 API 文档，并在线测试。
+你可以在 [suno.gcui.ai](https://suno.gcui.ai/docs)查看详细的 API 文档，并在线测试。
 
 ## API 说明
 
@@ -120,10 +121,13 @@ Suno API 目前主要实现了以下 API:
 - `/api/generate_lyrics`: 根据Prompt创建歌词
 - `/api/get`: 根据id获取音乐信息。获取多个请用","分隔，不传ids则返回所有音乐
 - `/api/get_limit`: 获取配额信息
+- `/api/extend_audio`: 在一首音乐的基础上，扩展音乐长度
+- `/api/clip`: 检索特定音乐的信息
+- `/api/concat`: 合并音乐，将扩展后的音乐和原始音乐合并
 ```
 
 详细文档请查看演示站点:
-[suno.gcui.art/docs](https://suno.gcui.art/docs)
+[suno.gcui.ai/docs](https://suno.gcui.ai/docs)
 
 ## API 集成代码示例
 
@@ -139,6 +143,11 @@ base_url = 'http://localhost:3000'
 
 def custom_generate_audio(payload):
     url = f"{base_url}/api/custom_generate"
+    response = requests.post(url, json=payload, headers={'Content-Type': 'application/json'})
+    return response.json()
+
+def extend_audio(payload):
+    url = f"{base_url}/api/extend_audio"
     response = requests.post(url, json=payload, headers={'Content-Type': 'application/json'})
     return response.json()
 
@@ -205,6 +214,13 @@ async function generateAudioByPrompt(payload) {
   });
   return response.data;
 }
+async function extendAudio(payload) {
+  const url = `${baseUrl}/api/extend_audio`;
+  const response = await axios.post(url, payload, {
+    headers: { "Content-Type": "application/json" },
+  });
+  return response.data;
+}
 
 async function getAudioInformation(audioIds) {
   const url = `${baseUrl}/api/get?ids=${audioIds}`;
@@ -262,21 +278,26 @@ main();
 
 ## 贡献指南
 
-Fork 项目并提交 PR 即可。
+您有四种方式支持本项目：
+
+1. Fork 项目并提交 PR：我们欢迎任何让这个组件和Editor变的更好的PR。
+2. 提交Issue：我们欢迎任何合理的建议、bug反馈。
+3. 捐赠：在项目的顶部我们放置了 Sponsor 按钮，如果这个项目帮助到了您，你可以请我们喝一杯，干杯☕。
+4. 推荐：向其他人推荐本项目；点击Star；使用本项目后放置外链。
 
 ## 许可证
 
 LGPL-3.0 或更高版本
 
-## 联系方式
+## 你有一个问题/建议/困难/Bug？
 
-- 联系我们：<support@gcui.art>
+我们使用Github的Issue来管理这些反馈，你可以提交一个。我们会经常来处理。
 
 ## 相关链接
 
 - 项目仓库: [github.com/gcui-art/suno-api](https://github.com/gcui-art/suno-api)
 - Suno.ai 官网: [suno.ai](https://suno.ai)
-- 演示站点: [suno.gcui.art](https://suno.gcui.art)
+- 演示站点: [suno.gcui.ai](https://suno.gcui.ai)
 
 ## 声明
 

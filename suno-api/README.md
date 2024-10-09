@@ -8,13 +8,15 @@
 <p align="center">
   <a target="_blank" href="./README.md">English</a> 
   | <a target="_blank" href="./README_CN.md">简体中文</a> 
-  | <a target="_blank" href="https://suno.gcui.art">Demo</a> 
-  | <a target="_blank" href="https://suno.gcui.art/docs">Docs</a> 
+  | <a target="_blank" href="https://suno.gcui.ai">Demo</a> 
+  | <a target="_blank" href="https://suno.gcui.ai/docs">Docs</a> 
   | <a target="_blank" href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fgcui-art%2Fsuno-api&env=SUNO_COOKIE&project-name=suno-api&repository-name=suno-api">Deploy with Vercel</a> 
 </p>
 <p align="center">
   <a href="https://www.producthunt.com/products/gcui-art-suno-api-open-source-sunoai-api/reviews?utm_source=badge-product_review&utm_medium=badge&utm_souce=badge-gcui&#0045;art&#0045;suno&#0045;api&#0045;open&#0045;source&#0045;sunoai&#0045;api" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/product_review.svg?product_id=577408&theme=light" alt="gcui&#0045;art&#0047;suno&#0045;api&#0058;Open&#0045;source&#0032;SunoAI&#0032;API - Use&#0032;API&#0032;to&#0032;call&#0032;the&#0032;music&#0032;generation&#0032;AI&#0032;of&#0032;suno&#0046;ai&#0046; | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
 </p>
+
+> 🔥 Check out our new open-source project: [Album AI - Chat with your gallery using plain language!](https://github.com/gcui-art/album-ai)
 
 ![suno-api banner](https://github.com/gcui-art/suno-api/blob/main/public/suno-banner.png)
 
@@ -27,7 +29,7 @@ We discovered that some users have similar needs, so we decided to open-source t
 ## Demo
 
 We have deployed an example bound to a free Suno account, so it has daily usage limits, but you can see how it runs:
-[suno.gcui.art](https://suno.gcui.art)
+[suno.gcui.ai](https://suno.gcui.ai)
 
 ## Features
 
@@ -109,7 +111,7 @@ it means the program is running normally.
 ### 5. Use Suno API
 
 You can check out the detailed API documentation at :
-[suno.gcui.art/docs](https://suno.gcui.art/docs)
+[suno.gcui.ai/docs](https://suno.gcui.ai/docs)
 
 ## API Reference
 
@@ -123,10 +125,13 @@ Suno API currently mainly implements the following APIs:
 - `/api/get`: Get music information based on the id. Use “,” to separate multiple ids.
     If no IDs are provided, all music will be returned.
 - `/api/get_limit`: Get quota Info
+- `/api/extend_audio`: Extend audio length
+- `/api/clip`: Get clip information based on ID passed as query parameter `id`
+- `/api/concat`: Generate the whole song from extensions
 ```
 
 For more detailed documentation, please check out the demo site:
-[suno.gcui.art/docs](https://suno.gcui.art/docs)
+[suno.gcui.ai/docs](https://suno.gcui.ai/docs)
 
 ## API Integration Code Example
 
@@ -146,6 +151,11 @@ def custom_generate_audio(payload):
     return response.json()
 
 
+def extend_audio(payload):
+    url = f"{base_url}/api/extend_audio"
+    response = requests.post(url, json=payload, headers={'Content-Type': 'application/json'})
+    return response.json()
+
 def generate_audio_by_prompt(payload):
     url = f"{base_url}/api/generate"
     response = requests.post(url, json=payload, headers={'Content-Type': 'application/json'})
@@ -161,6 +171,17 @@ def get_audio_information(audio_ids):
 def get_quota_information():
     url = f"{base_url}/api/get_limit"
     response = requests.get(url)
+    return response.json()
+
+def get_clip(clip_id):
+    url = f"{base_url}/api/clip?id={clip_id}"
+    response = requests.get(url)
+    return response.json()
+
+def generate_whole_song(clip_id):
+    payloyd = {"clip_id": clip_id}
+    url = f"{base_url}/api/concat"
+    response = requests.post(url, json=payload)
     return response.json()
 
 
@@ -209,6 +230,14 @@ async function generateAudioByPrompt(payload) {
   return response.data;
 }
 
+async function extendAudio(payload) {
+  const url = `${baseUrl}/api/extend_audio`;
+  const response = await axios.post(url, payload, {
+    headers: { "Content-Type": "application/json" },
+  });
+  return response.data;
+}
+
 async function getAudioInformation(audioIds) {
   const url = `${baseUrl}/api/get?ids=${audioIds}`;
   const response = await axios.get(url);
@@ -217,6 +246,12 @@ async function getAudioInformation(audioIds) {
 
 async function getQuotaInformation() {
   const url = `${baseUrl}/api/get_limit`;
+  const response = await axios.get(url);
+  return response.data;
+}
+
+async function getClipInformation(clipId) {
+  const url = `${baseUrl}/api/clip?id=${clipId}`;
   const response = await axios.get(url);
   return response.data;
 }
@@ -263,23 +298,29 @@ You can integrate Suno AI as a tool/plugin/action into your AI agent.
 
 [coming soon...]
 
-## Contribution Guidelines
+## Contributing
 
-Fork the project and submit a pull request.
+There are four ways you can support this project:
+
+1. Fork and Submit Pull Requests: We welcome any PRs that enhance the component or editor.
+2. Open Issues: We appreciate reasonable suggestions and bug reports.
+3. Donate: If this project has helped you, consider buying us a coffee using the Sponsor button at the top of the project. Cheers! ☕
+4. Spread the Word: Recommend this project to others, star the repo, or add a backlink after using the project.
+
+## Questions, Suggestions, Issues, or Bugs?
+
+We use GitHub Issues to manage feedback. Feel free to open an issue, and we'll address it promptly.
 
 ## License
 
 LGPL-3.0 or later
 
-## Contact Us
-
-- Contact us: <support@gcui.art>
-
 ## Related Links
 
 - Project repository: [github.com/gcui-art/suno-api](https://github.com/gcui-art/suno-api)
 - Suno.ai official website: [suno.ai](https://suno.ai)
-- Demo: [suno.gcui.art](https://suno.gcui.art)
+- Demo: [suno.gcui.ai](https://suno.gcui.ai)
+- Album AI: [Auto generate image metadata and chat with the album. RAG + Album.](https://github.com/gcui-art/album-ai)
 
 ## Statement
 
